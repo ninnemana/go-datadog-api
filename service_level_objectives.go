@@ -469,17 +469,26 @@ func (client *Client) CheckCanDeleteServiceLevelObjectives(ids []string) (*Servi
 // ServiceLevelObjectiveHistorySeriesPoint is a convenient wrapper for (timestamp, value) history data response.
 type ServiceLevelObjectiveHistorySeriesPoint [2]json.Number
 
+type ServiceLevelObjectiveHistoryMetricSeriesUnitData struct {
+	Family      string  `json:"family"`
+	ID          int64   `json:"id"`
+	Name        string  `json:"name"`
+	Plural      string  `json:"plural"`
+	ScaleFactor float32 `json:"scale_factor"`
+	ShortName   string  `json:"short_name"`
+}
+
 // ServiceLevelObjectiveHistoryMetricSeriesData contains the `batch_query` like history data for `metric` based SLOs
 type ServiceLevelObjectiveHistoryMetricSeriesData struct {
 	Count    int64       `json:"count"`
 	Sum      json.Number `json:"sum"`
 	MetaData struct {
-		QueryIndex int     `json:"query_index"`
-		Aggregator string  `json:"aggr"`
-		Scope      string  `json:"scope"`
-		Metric     string  `json:"metric"`
-		Expression string  `json:"expression"`
-		Unit       *string `json:"unit"`
+		QueryIndex int                                                `json:"query_index"`
+		Aggregator string                                             `json:"aggr"`
+		Scope      string                                             `json:"scope"`
+		Metric     string                                             `json:"metric"`
+		Expression string                                             `json:"expression"`
+		Unit       []ServiceLevelObjectiveHistoryMetricSeriesUnitData `json:"unit"`
 	} `json:"metadata"`
 	Values []json.Number `json:"values"`
 	Times  []int64       `json:"times"`
